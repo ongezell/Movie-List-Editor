@@ -13,9 +13,11 @@ This script allows you to create a list of movies, along with their ratings and 
 
 ## How to use Python version
 
-Same as the HTML version but instead of showing it in a DIV it will create a file called movies.html with the list.
+1. Click on it or run `Python Movie List Editor.py`
+2. It will create a file called movies.html with the list.
+
 Requires requests library.
-You can install it using pip install requests.
+You can install it using `pip install requests` 
 
 ## How to generate an API key and a search engine ID
 
