@@ -7,7 +7,7 @@ This script allows you to create a list of movies, along with their ratings and 
 1. Replace the `apiKey` and `searchEngineId` variables at the top of the script with your own API key and search engine ID.
 2. In the `main` function, enter the number of movies you want to include in the list.
 3. For each movie, enter its name and rating. The script will automatically retrieve a list of image options from the Google Custom Search API, and display them in a horizontal row.
-4. Select the image you want to use by clicking on it. The selected image will be highlighted with a green border.
+4.The script finds the cover image for it automatically but if fails it will prompt you to pick one from five images by clicking on it. The selected image will be highlighted with a green border.
 5. When you have selected an image for all movies, the script will generate the HTML code for the movie list and display it in a `div` element at the end of the page.
 
 ## How to generate an API key and a search engine ID
