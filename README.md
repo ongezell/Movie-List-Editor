@@ -11,7 +11,7 @@ This script allows you to create a list of movies, along with their ratings and 
 4.The script finds the cover image for it automatically but if fails it will prompt you to pick one from five images by clicking on it. The selected image will be highlighted with a green border.
 5. When you have selected an image for all movies, the script will generate the HTML code for the movie list and display it in a `div` element at the end of the page.
 
-## how to use Python version
+## How to use Python version
 
 Same as the HTML version but instead of showing it in a DIV it will create a file called movies.html with the list.
 Requires requests library.
