@@ -1,6 +1,6 @@
 # Movie List Editor
 
-Made this script to help me organize my movies list but hey, maybe it's something useful for someone else so here it is.
+Made this script to help me organize my [movie list](https://ongezell.com/blogposts/movies.html) on my blog but hey, maybe it's something useful for someone else so here it is.
 This script allows you to create a list of movies, along with their ratings and associated images. The images are obtained through a Google Custom Search API.
 
 ## How to use
