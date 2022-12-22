@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<!-- Create by Ongezell at Ongezell.com -->
+<html>
+<head>
+  <title>Movie List</title>
+  <style>
+    #image-selector {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      height: 400px;
+      align-items: center;
+    }
+
+    .image-option {
+      height: 400px;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .image-option.selected {
+      border: 2px solid #4caf50;
+    }
+  </style>
+</head>
+<body>
+  <h1>Movie List</h1>
+  <ul id="movie-list"></ul>
+  <div id="prompt-container">
+    <label for="num-movies">Enter the number of movies:</label>
+    <input type="number" id="num-movies" min="1">
+  </div>
+  <script>
+    const apiKey = " Insert your apiKey here ";
+    const searchEngineId = " Insert your Custom Search Engine ID here ";
+
+    async function getImageUrls(movieName) {
+      const query = movieName + " movie poster";
+      const url = `https://www.googleapis.com/customsearch/v1?q=${query}&key=${apiKey}&cx=${searchEngineId}&searchType=image`;
+      const response = await fetch(url);
+      const data = await response.json();
+      const imageUrls = [];
+      for (let i = 0; i < 5; i++) {
+        imageUrls.push(data["items"][i]["link"]);
+      }
+      return imageUrls;
+    }
+
+    function createImageSelector(imageUrls) {
+      const imageSelector = document.createElement("div");
+      imageSelector.id = "image-selector";
+
+      for (let i = 0; i < imageUrls.length; i++) {
+        const img = document.createElement("img");
+        img.src = imageUrls[i];
+        img.classList.add("image-option");
+        img.addEventListener("click", function() {
+          const selected = document.querySelector(".selected");
+          if (selected) {
+            selected.classList.remove("selected");
+          }
+          this.classList.add("selected");
+        });
+        imageSelector.appendChild(img);
+      }
+
+      return imageSelector;
+    }
+
+    function removeImageSelector() {
+      const imageSelector = document.getElementById("image-selector");
+      if (imageSelector) {
+        imageSelector.parentNode.removeChild(imageSelector);
+      }
+    }
+
+    function generateHtml(name, rating, imageUrl) {
+      const html = `
+        <li class="movie" onmouseover="showImage(this)" onmouseout="hideImage(this)" data-image-url="${imageUrl}" data-rating="${rating}">
+          <span class="name">${name}</span>
+          <span class="rating">${rating}</span>
+        </li>
+        <img class="moveAble" src="${imageUrl}" alt="Movie image">
+      `;
+      return html;
+    }
+
+    async function main() {
+	
+      const numMovies = document.getElementById("num-movies").value;
+      let html = "";
+      for (let i = 0; i < numMovies; i++) {
+        const name = prompt("Enter the name of the movie: ");
+        const rating = prompt("Enter the rating of the movie: ");
+        const imageUrls = await getImageUrls(name);
+        let imageUrl = imageUrls[0];
+        try {
+          const response = await fetch(imageUrl);
+          if (!response.ok) {
+            throw new Error("Image link is broken");
+          }
+        } catch (error) {
+          console.error(error);
+          const imageSelector = createImageSelector(imageUrls);
+          document.body.appendChild(imageSelector);
+
+          const selectedImage = await new Promise(resolve => {
+            const selectImageButton = document.createElement("button");
+            selectImageButton.textContent = "Select image";
+            selectImageButton.addEventListener("click", function() {
+              const selected = document.querySelector(".selected");
+              if (selected) {
+                resolve(selected.src);
+              } else {
+                alert("Please select an image");
+              }
+            });
+            document.body.appendChild(selectImageButton);
+          });
+
+          removeImageSelector();
+          imageUrl = selectedImage;
+        }
+        html += generateHtml(name, rating, imageUrl);
+      }
+      const movieList = document.getElementById("movie-list");
+      movieList.innerHTML = html;
+	  
+	  
+  
+   //Create a div and formats the code
+  const outputDiv = document.createElement("div");
+  const pre = document.createElement("pre");
+  const code = document.createElement("code");
+  code.textContent = html;
+  pre.appendChild(code);
+  outputDiv.appendChild(pre);
+  document.body.appendChild(outputDiv);
+	  
+	  
+    }
+
+    const numMoviesInput = document.getElementById("num-movies");
+    numMoviesInput.addEventListener("change", main);
+  </script>
+</body>
